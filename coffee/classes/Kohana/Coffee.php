@@ -6,7 +6,7 @@
  * @category   Base
  * @author     Thernytskyi A., Kostylev A.
  * @copyright  (c) 2014
- * @license    https://github.com/mundiir/EivaCMS
+ * @license    https://github.com/mendor1990/coffee
  */
 class Kohana_Coffee {
 
@@ -79,6 +79,47 @@ class Kohana_Coffee {
 			return TRUE;
 		else
 			return FALSE;
+	}
+	
+	/**
+	 * @param string $value
+	 * @param string $length
+	 *
+	 * ѕринимает в качестве параметра текст и его длинну. ƒоходит до заданного символа,
+	 * заканчивает слово и если текст был обрезан, то добавл€ет три точки
+	 */
+	public function cut_text($value, $length){
+		$text = implode(array_slice(explode('<br>',wordwrap($value,$length,'<br>',false)),0,1));
+		if($text!=$value)$text=$text.'...';
+		return $text;
+	}
+	
+	/**
+	 *
+	 * @param int $number - количество элементов
+	 * @param array $endingArray - массив возможных вариантов слова
+	 * @return string
+	 *
+	 * ћетод сколн€ет существительные
+	 */
+	public function getNumEnding($number, $endingArray)
+	{
+		$number = $number % 100;
+		if ($number>=11 && $number<=19) {
+			$ending=$endingArray[2];
+		}
+		else {
+			$i = $number % 10;
+			switch ($i)
+			{
+				case (1): $ending = $endingArray[0]; break;
+				case (2):
+				case (3):
+				case (4): $ending = $endingArray[1]; break;
+				default: $ending=$endingArray[2];
+			}
+		}
+		return $ending;
 	}
 
 }
